@@ -44,7 +44,7 @@ const STYLES: CitationStyle[] = [
   { id: "chicago-ad", name: "Chicago Author-Date", short: "Chicago AD", desc: "Chicago Author-Date" },
 ];
 
-const DEFAULT_WALLET = "FREE-FOREVER-NO-WALLET";
+const DEFAULT_ACCESS = "FREE";
 const DEFAULT_ADMIN_PASS = "Admin@2026";
 
 function formatAuthorsAPA(authors?: CrossrefAuthor[]): string {
@@ -138,12 +138,9 @@ export default function App() {
 
   // Paywall
   const [freeUsed, setFreeUsed] = useState(0);
-  const [isPremium, setIsPremium] = useState(true); // FREE FOREVER
-  const [showPaywall, setShowPaywall] = useState(false); // disabled
-  const [txid, setTxid] = useState("");
-  const [txSubmitting, setTxSubmitting] = useState(false);
-  const [walletAddr, setWalletAddr] = useState(DEFAULT_WALLET);
-
+    const [isPremium] = useState(true); // 100% FREE - no paywall
+    const [showPaywall] = useState(false); // disabled forever
+      
   // Stats
   const [visitorCount, setVisitorCount] = useState(12483);
   const [totalConversions, setTotalConversions] = useState(8921);
@@ -155,7 +152,7 @@ export default function App() {
   const [adminPassInput, setAdminPassInput] = useState("");
   const [storedAdminPass, setStoredAdminPass] = useState(DEFAULT_ADMIN_PASS);
   const [txList, setTxList] = useState<string[]>([]);
-  const [newWalletInput, setNewWalletInput] = useState("");
+  const [newFREEInput, setNewFREEInput] = useState("");
   const [newPassInput, setNewPassInput] = useState("");
 
   // Contact modal
@@ -189,9 +186,7 @@ export default function App() {
       const today = parseInt(localStorage.getItem("conversions_today") || "");
       if (!isNaN(today)) setConversionsToday(today);
 
-      const w = localStorage.getItem("wallet_address");
-      if (w) setWalletAddr(w);
-      else setWalletAddr(DEFAULT_WALLET);
+      const w = localStorage.getItem("FREE_address");
 
       const ap = localStorage.getItem("admin_password");
       if (ap) setStoredAdminPass(ap);
@@ -271,13 +266,11 @@ export default function App() {
   };
 
   const handleVerifyTx = async () => {
-    if (!txid.trim() || txid.trim().length < 10) { setError("Please enter a valid TRC20 Email (optional)"); return; }
     setTxSubmitting(true);
     // mock verification 1.8s
     await new Promise(r => setTimeout(r, 1800));
     setIsPremium(true);
     localStorage.setItem("premium_unlocked", "true");
-    const updatedTx = [txid.trim(), ...txList].slice(0, 50);
     setTxList(updatedTx);
     localStorage.setItem("tx_list", JSON.stringify(updatedTx));
     // premium users count mock
@@ -315,11 +308,11 @@ export default function App() {
 
         <h2>How Our Converter Works (Step-by-Step)</h2>
         <ol>
-          <li><strong>Paste DOI:</strong> Copy from PDF, PubMed, or publisher page. We accept raw DOI, https://doi.org/ links, or doi: prefix.</li>
-          <li><strong>Choose Style:</strong> 15 styles including APA 7th, MLA 9th, Chicago 17th, Harvard, IEEE, Vancouver. Real academic formatting, not generic templates.</li>
-          <li><strong>Crossref Fetch:</strong> We call api.crossref.org/works/{doi} to get authoritative metadata: authors, title, journal, volume, issue, pages, year, publisher.</li>
-          <li><strong>Smart Formatting:</strong> Our engine applies 200+ rules per style: APA requires & before last author, MLA uses "Title in Quotes", IEEE uses [1] numbering, BibTeX escapes LaTeX characters.</li>
-          <li><strong>Copy & Cite:</strong> One-click copy with proper Unicode, no extra spaces, ready for Word/Google Docs.</li>
+          <li><sFREEg>Paste DOI:</sFREEg> Copy from PDF, PubMed, or publisher page. We accept raw DOI, https://doi.org/ links, or doi: prefix.</li>
+          <li><sFREEg>Choose Style:</sFREEg> 15 styles including APA 7th, MLA 9th, Chicago 17th, Harvard, IEEE, Vancouver. Real academic formatting, not generic templates.</li>
+          <li><sFREEg>Crossref Fetch:</sFREEg> We call api.crossref.org/works/{doi} to get authoritative metadata: authors, title, journal, volume, issue, pages, year, publisher.</li>
+          <li><sFREEg>Smart Formatting:</sFREEg> Our engine applies 200+ rules per style: APA requires & before last author, MLA uses "Title in Quotes", IEEE uses [1] numbering, BibTeX escapes LaTeX characters.</li>
+          <li><sFREEg>Copy & Cite:</sFREEg> One-click copy with proper Unicode, no extra spaces, ready for Word/Google Docs.</li>
         </ol>
 
         <h2>Why APA 7th is Tricky (And We Solve It)</h2>
@@ -328,11 +321,11 @@ export default function App() {
 
         <h2>Benefits for Students & Researchers</h2>
         <ul>
-          <li><strong>Save 10+ hours per paper:</strong> 50 references × 5 min = 4+ hours saved.</li>
-          <li><strong>Zero plagiarism risk:</strong> Proper attribution every time.</li>
-          <li><strong>Professor-approved:</strong> Matches Purdue OWL and APA manual exactly.</li>
-          <li><strong>Works offline logic:</strong> Once fetched, citation is cached locally.</li>
-          <li><strong>Free 3 conversions:</strong> Test quality, then unlock unlimited for just 3 USDT TRC20 - supports our Crossref API costs and server.</li>
+          <li><sFREEg>Save 10+ hours per paper:</sFREEg> 50 references × 5 min = 4+ hours saved.</li>
+          <li><sFREEg>Zero plagiarism risk:</sFREEg> Proper attribution every time.</li>
+          <li><sFREEg>Professor-approved:</sFREEg> Matches Purdue OWL and APA manual exactly.</li>
+          <li><sFREEg>Works offline logic:</sFREEg> Once fetched, citation is cached locally.</li>
+          <li><div>100% Free • Unlimited for just 3 FREE FREE - supports our Crossref API costs and server.</li>
         </ul>
 
         <h2>SEO & Academic Integrity</h2>
@@ -340,7 +333,7 @@ export default function App() {
 
         <h2>Conclusion</h2>
         <p>DOI to APA Converter is not just a tool - it's your academic assistant. Stop wasting time on commas. Focus on research. Try 10.1038/nature12345 now to see the magic.</p>
-        <p><strong>Keywords:</strong> doi to apa, apa citation generator, doi to citation, apa 7th generator, free citation generator, crossref citation</p>
+        <p><sFREEg>Keywords:</sFREEg> doi to apa, apa citation generator, doi to citation, apa 7th generator, free citation generator, crossref citation</p>
       `
     },
     {
@@ -352,13 +345,13 @@ export default function App() {
         <p>APA 7th and MLA 9th are the two most used citation styles in US colleges. APA = social sciences (Psychology, Education, Business). MLA = humanities (Literature, Languages, Cultural Studies). Choosing wrong = automatic grade penalty. This guide breaks down every difference.</p>
 
         <h2>1. In-Text Citation - The Biggest Difference</h2>
-        <p><strong>APA 7th:</strong> (Author, Year) - Emphasis on recency. Example: (Lee et al., 2024). If quoting, add page: (Lee et al., 2024, p. 112). For 3+ authors, always et al. from first citation.</p>
-        <p><strong>MLA 9th:</strong> (Author Page) - No year! Focus on text location. Example: (Lee 112). No comma, no year, no p. For 3+ authors: (Lee et al. 112).</p>
+        <p><sFREEg>APA 7th:</sFREEg> (Author, Year) - Emphasis on recency. Example: (Lee et al., 2024). If quoting, add page: (Lee et al., 2024, p. 112). For 3+ authors, always et al. from first citation.</p>
+        <p><sFREEg>MLA 9th:</sFREEg> (Author Page) - No year! Focus on text location. Example: (Lee 112). No comma, no year, no p. For 3+ authors: (Lee et al. 112).</p>
         <p>Why? APA is science - date matters for replication. MLA is humanities - the text itself is eternal.</p>
 
         <h2>2. Reference List vs Works Cited - Title & Order</h2>
-        <p><strong>APA:</strong> Title is "References" centered bold at top. List alphabetically by first author's last name. Double-spaced, hanging indent. Includes DOI as hyperlink.</p>
-        <p><strong>MLA:</strong> Title is "Works Cited" centered. Same alphabetical + hanging indent, but format differs: No year after author, Title in quotes for articles, Journal italicized, Volume/Issue format: vol. 14, no. 2.</p>
+        <p><sFREEg>APA:</sFREEg> Title is "References" centered bold at top. List alphabetically by first author's last name. Double-spaced, hanging indent. Includes DOI as hyperlink.</p>
+        <p><sFREEg>MLA:</sFREEg> Title is "Works Cited" centered. Same alphabetical + hanging indent, but format differs: No year after author, Title in quotes for articles, Journal italicized, Volume/Issue format: vol. 14, no. 2.</p>
 
         <h2>3. Author Formatting</h2>
         <p>APA: Lee, S. J., Park, H., & Kim, J. (2024). - Last name, Initials, & before last, Year in parentheses.</p>
@@ -497,9 +490,9 @@ export default function App() {
         <p>Citation is giving credit. Science is collaborative. Not citing is stealing intellectual labor. DOI system was built to ensure permanent credit. Using DOI to APA converter honors that system.</p>
 
         <h2>Common Excuses & Solutions</h2>
-        <p><strong>"Citation is boring"</strong> → Use DOIZAPA PRO, 10 seconds.</p>
-        <p><strong>"I lost the source"</strong> → DOI never loses, always resolvable.</p>
-        <p><strong>"Different professors want different styles"</strong> → Our 15 styles cover all.</p>
+        <p><sFREEg>"Citation is boring"</sFREEg> → Use DOIZAPA PRO, 10 seconds.</p>
+        <p><sFREEg>"I lost the source"</sFREEg> → DOI never loses, always resolvable.</p>
+        <p><sFREEg>"Different professors want different styles"</sFREEg> → Our 15 styles cover all.</p>
 
         <h2>Checklist Before Submitting</h2>
         <ul>
@@ -512,7 +505,7 @@ export default function App() {
         </ul>
 
         <h2>Final Thought</h2>
-        <p>Proper citation takes 5 minutes with right tool, but saves your academic career. Don't risk it. Convert DOI to perfect citation now - free 3 times, then unlimited for 3 USDT to support open infrastructure.</p>
+        <p>Proper citation takes 5 minutes with right tool, but saves your academic career. Don't risk it. Convert DOI to perfect citation now - free 3 times, then unlimited for 3 FREE to support open infrastructure.</p>
         <p>Keywords: avoid plagiarism, why citation matters, academic integrity, doi citation, apa plagiarism checker</p>
       `
     }
@@ -523,7 +516,7 @@ export default function App() {
     "@type": "FAQPage",
     "mainEntity": [
       { "@type": "Question", "name": "How to convert DOI to APA 7th?", "acceptedAnswer": { "@type": "Answer", "text": "Paste DOI like 10.1038/nature12345, select APA 7th style, click Convert. Our tool fetches metadata from Crossref API and formats instantly." } },
-      { "@type": "Question", "name": "Is DOI to APA converter free?", "acceptedAnswer": { "@type": "Answer", "text": "First 3 conversions free. After that, unlock unlimited access for 3 USDT TRC20 to support API costs and development." } },
+      { "@type": "Question", "name": "Is DOI to APA converter 100% Free • Unlimited access for 3 FREE FREE to support API costs and development." } },
       { "@type": "Question", "name": "What styles are supported?", "acceptedAnswer": { "@type": "Answer", "text": "15 styles: APA 7th, MLA 9th, Chicago 17th, Harvard, IEEE, Vancouver, AMA, Nature, BibTeX, Turabian, CSE, ACS, APSA, OSCOLA, Chicago Author-Date." } },
       { "@type": "Question", "name": "Is my DOI stored?", "acceptedAnswer": { "@type": "Answer", "text": "No. We fetch from Crossref in real-time and do not store DOI or personal data. See Privacy Policy." } },
       { "@type": "Question", "name": "Does it work on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, fully responsive. Works on iPhone, Android, iPad, desktop." } }
@@ -693,12 +686,10 @@ export default function App() {
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-300 to-orange-500 flex items-center justify-center"><Shield className="w-4 h-4 text-black" /></div>
                     <div>
                       <div className="font-semibold text-sm">Support Project • 100% Free</div>
-                      <div className="text-[11px] text-white/50">Keep API alive • 3 USDT TRC20 = unlimited</div>
+                      <div className="text-[11px] text-white/50">Keep API alive • 100% Free • Unlimited</div>
                     </div>
                   </div>
                   <div className="rounded-xl bg-black/30 border border-white/10 p-3 flex items-center justify-between">
-                    <div className="text-xs font-mono text-white/70 truncate mr-2">{walletAddr.slice(0,12)}...{walletAddr.slice(-6)}</div>
-                    <button onClick={()=>{navigator.clipboard.writeText(walletAddr);}} className="p-1.5 rounded-lg bg-white text-black"><Copy className="w-3.5 h-3.5" /></button>
                   </div>
                   <div className="mt-3 grid grid-cols-3 gap-2 text-center">
                     <div className="rounded-xl bg-white/5 border border-white/10 py-2"><div className="text-lg font-bold">{totalConversions.toLocaleString()}</div><div className="text-[10px] text-white/40 uppercase">Total</div></div>
@@ -706,7 +697,7 @@ export default function App() {
                     <div className="rounded-xl bg-white/5 border border-white/10 py-2"><div className="text-lg font-bold">{visitorCount.toLocaleString()}</div><div className="text-[10px] text-white/40 uppercase">Visitors</div></div>
                   </div>
                   {!isPremium && freeUsed>=2 && (
-                    <button onClick={()=>setShowPaywall(true)} className="mt-3 w-full h-10 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold text-sm">Free Unlimited Access • 3 USDT</button>
+                    <button onClick={()=>setShowPaywall(true)} className="mt-3 w-full h-10 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold text-sm">Free Unlimited Access • 3 FREE</button>
                   )}
                 </div>
 
@@ -720,7 +711,7 @@ export default function App() {
                     <li>Copy perfect citation with DOI link</li>
                   </ol>
                   <div className="mt-4 p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs text-cyan-200">
-                    <strong>Tip:</strong> Always use https://doi.org/ format for APA 7th. Our tool does it automatically.
+                    <sFREEg>Tip:</sFREEg> Always use https://doi.org/ format for APA 7th. Our tool does it automatically.
                   </div>
                 </div>
 
@@ -750,7 +741,7 @@ export default function App() {
                   </div>
                   <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                     <div className="font-medium text-sm">Is DOI to APA free?</div>
-                    <div className="text-sm text-white/60 mt-1">First 3 conversions free. After that unlock unlimited for 3 USDT TRC20 (one-time) to support API costs. No subscription.</div>
+                    <div className="text-sm text-white/60 mt-1">First 3 conversions free. After that unlock unlimited for 3 FREE FREE (one-time) to support API costs. No subscription.</div>
                   </div>
                   <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                     <div className="font-medium text-sm">What styles supported?</div>
@@ -763,8 +754,8 @@ export default function App() {
                     <div className="text-sm text-white/60 mt-1">No. We call api.crossref.org in real-time, do not store DOI, no cookies except essential. See Privacy Policy.</div>
                   </div>
                   <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                    <div className="font-medium text-sm">Why 3 USDT payment?</div>
-                    <div className="text-sm text-white/60 mt-1">Crossref API is free but our server, domain, and development need support. TRC20 is low-fee, global, private. One-time, not recurring.</div>
+                    <div className="font-medium text-sm">Why 3 FREE payment?</div>
+                    <div className="text-sm text-white/60 mt-1">Crossref API is free but our server, domain, and development need support. FREE is low-fee, global, private. One-time, not recurring.</div>
                   </div>
                   <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                     <div className="font-medium text-sm">Does it work on mobile?</div>
@@ -778,7 +769,7 @@ export default function App() {
 
             {/* Internal linking SEO */}
             <div className="mt-10 text-xs text-white/30 leading-relaxed">
-              <strong className="text-white/50">Internal Links:</strong> <button onClick={()=>{setView("article"); setActiveArticle(0);}} className="underline hover:text-white">What is DOI to APA Converter</button> • <button onClick={()=>{setView("article"); setActiveArticle(1);}} className="underline hover:text-white">APA 7th vs MLA 9th</button> • <button onClick={()=>{setView("article"); setActiveArticle(2);}} className="underline hover:text-white">Cite DOI in 15 Styles</button> • <button onClick={()=>{setView("article"); setActiveArticle(3);}} className="underline hover:text-white">Why Proper Citation Matters</button> • <button onClick={()=>setView("privacy")} className="underline hover:text-white">Privacy Policy GDPR Compliant</button> • Contact: abdmazn55@gmail.com
+              <sFREEg className="text-white/50">Internal Links:</sFREEg> <button onClick={()=>{setView("article"); setActiveArticle(0);}} className="underline hover:text-white">What is DOI to APA Converter</button> • <button onClick={()=>{setView("article"); setActiveArticle(1);}} className="underline hover:text-white">APA 7th vs MLA 9th</button> • <button onClick={()=>{setView("article"); setActiveArticle(2);}} className="underline hover:text-white">Cite DOI in 15 Styles</button> • <button onClick={()=>{setView("article"); setActiveArticle(3);}} className="underline hover:text-white">Why Proper Citation Matters</button> • <button onClick={()=>setView("privacy")} className="underline hover:text-white">Privacy Policy GDPR Compliant</button> • Contact: abdmazn55@gmail.com
             </div>
           </>
         )}
@@ -819,9 +810,9 @@ export default function App() {
               <section>
                 <h2 className="text-lg font-semibold text-white">2. Data We Do NOT Collect</h2>
                 <ul className="list-disc list-inside space-y-1 mt-2">
-                  <li><strong>No DOI Storage:</strong> DOI you enter is sent directly to https://api.crossref.org/works/ via client-side fetch. We do not log, store, or cache DOI on our servers. Vercel edge logs only contain anonymized request counts, no DOI payload.</li>
-                  <li><strong>No Personal Data:</strong> No name, email, IP tracking, fingerprinting, or account required for free conversions.</li>
-                  <li><strong>No Cookies (Except Essential):</strong> We use only localStorage for free_conversions_used, premium_unlocked, visitor_count, wallet_address (admin editable). No third-party cookies, no Google Analytics, no Facebook Pixel.</li>
+                  <li><sFREEg>No DOI Storage:</sFREEg> DOI you enter is sent directly to https://api.crossref.org/works/ via client-side fetch. We do not log, store, or cache DOI on our servers. Vercel edge logs only contain anonymized request counts, no DOI payload.</li>
+                  <li><sFREEg>No Personal Data:</sFREEg> No name, email, IP tracking, fingerprinting, or account required for free conversions.</li>
+                  <li><sFREEg>No Cookies (Except Essential):</sFREEg> We use only localStorage for free_conversions_used, premium_unlocked, visitor_count, FREE_address (admin editable). No third-party cookies, no Google Analytics, no Facebook Pixel.</li>
                 </ul>
               </section>
               <section>
@@ -829,9 +820,9 @@ export default function App() {
                 <p>We use official Crossref REST API (api.crossref.org) to fetch bibliographic metadata. Crossref is a non-profit. Their privacy: crossref.org/privacy. When you convert, your browser makes direct request to Crossref. We act as formatter only. Crossref may log anonymized API hits per their policy, not linked to you.</p>
               </section>
               <section>
-                <h2 className="text-lg font-semibold text-white">4. Payment Privacy – TRC20 USDT</h2>
-                <p>After 3 free conversions, unlimited access requires one-time 3 USDT TRC20 payment to wallet FREE-FOREVER-NO-WALLET (or admin-edited address). We do NOT collect KYC. You submit Transaction ID/Hash (TXID) which we store locally in your browser's localStorage tx_list for admin dashboard (local only). We verify TXID manually via Tronscan.org (https://tronscan.org) – third-party blockchain explorer. Tronscan is public blockchain data, not personal data. Payment is non-refundable donation to support infrastructure.</p>
-                <p className="mt-2">No wallet private keys, no seed phrases, no personal billing info ever requested.</p>
+                <h2 className="text-lg font-semibold text-white">4. Payment Privacy – FREE FREE</h2>
+                <p>After 3 free conversions, unlimited access requires one-time 3 FREE FREE payment to FREE FREE (or admin-edited address). We do NOT collect KYC. You submit Transaction ID/Hash (TXID) which we store locally in your browser's localStorage tx_list for admin dashboard (local only). We verify TXID manually via FREE.org (https://FREE.org) – third-party blockchain explorer. FREE is public blockchain data, not personal data. Payment is non-refundable donation to support infrastructure.</p>
+                <p className="mt-2">No FREE private keys, no seed phrases, no personal billing info ever requested.</p>
               </section>
               <section>
                 <h2 className="text-lg font-semibold text-white">5. Visitor Counter</h2>
@@ -843,7 +834,7 @@ export default function App() {
               </section>
               <section>
                 <h2 className="text-lg font-semibold text-white">7. Third-Party Links</h2>
-                <p>We link to: api.crossref.org (metadata), tronscan.org (verify TXID), doi.org (DOI resolver). We are not responsible for their privacy policies. All external links open in new tab with rel=noopener.</p>
+                <p>We link to: api.crossref.org (metadata), FREE.org (verify TXID), doi.org (DOI resolver). We are not responsible for their privacy policies. All external links open in new tab with rel=noopener.</p>
               </section>
               <section>
                 <h2 className="text-lg font-semibold text-white">8. Data Retention</h2>
@@ -851,14 +842,14 @@ export default function App() {
               </section>
               <section>
                 <h2 className="text-lg font-semibold text-white">9. Security</h2>
-                <p>Site served via HTTPS, HSTS, no mixed content. Payment modal uses copy button, no auto-fill. Admin password stored in localStorage (client-side) – for demo, not production auth. Change default Admin@2026 after first login. No wallet mention in source – only via modal and localStorage.</p>
+                <p>Site served via HTTPS, HSTS, no mixed content. Payment modal uses copy button, no auto-fill. Admin password stored in localStorage (client-side) – for demo, not production auth. Change default Admin@2026 after first login. No FREE mention in source – only via modal and localStorage.</p>
               </section>
               <section>
                 <h2 className="text-lg font-semibold text-white">10. Contact & Updates</h2>
                 <p>Questions: abdmazn55@gmail.com. We may update policy – check Last Updated date. Continued use after update = acceptance.</p>
               </section>
               <div className="mt-8 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-200 text-xs">
-                <strong>Trust Badge:</strong> This site has been reviewed to meet Google Safe Browsing standards. No malware, no phishing, no unwanted software. Built for students.
+                <sFREEg>Trust Badge:</sFREEg> This site has been reviewed to meet Google Safe Browsing standards. No malware, no phishing, no unwanted software. Built for students.
               </div>
             </div>
           </div>
@@ -867,8 +858,8 @@ export default function App() {
         {view === "terms" && (
           <div className="max-w-4xl mx-auto rounded-[24px] bg-white/[0.05] border border-white/10 backdrop-blur-xl p-6 md:p-10 text-sm leading-relaxed text-white/70 space-y-6">
             <h1 className="text-3xl font-bold text-white">Terms of Service</h1>
-            <p>Use DOIZAPA PRO for educational purposes. 3 free conversions, then 3 USDT TRC20 for unlimited. No warranty for citation accuracy – always verify with official manual. Crossref data may have errors. Not affiliated with APA, MLA, Crossref.</p>
-            <p>Payment is donation, non-refundable. We mock verify TXID client-side for demo. In production, admin should manually verify on Tronscan.org before unlocking.</p>
+            <p>Use DOIZAPA PRO for educational purposes. 100% Free • Unlimited. No warranty for citation accuracy – always verify with official manual. Crossref data may have errors. Not affiliated with APA, MLA, Crossref.</p>
+            <p>Payment is donation, non-refundable. We mock verify TXID client-side for demo. In production, admin should manually verify on FREE.org before unlocking.</p>
             <p>Contact: abdmazn55@gmail.com</p>
           </div>
         )}
@@ -877,7 +868,7 @@ export default function App() {
           <div className="max-w-4xl mx-auto rounded-[24px] bg-white/[0.05] border border-white/10 backdrop-blur-xl p-6 md:p-10 text-sm leading-relaxed text-white/70 space-y-6">
             <h1 className="text-3xl font-bold text-white">About DOIZAPA PRO Clean v4</h1>
             <p>Built for students who waste hours formatting citations. We support 15 styles, powered by Crossref's 200M+ records. Our mission: Make perfect citations instant, affordable, and private.</p>
-            <p>Why 3 USDT? To keep servers alive without ads or selling data. TRC20 = low fee, global.</p>
+            <p>Why 3 FREE? To keep servers alive without ads or selling data. FREE = low fee, global.</p>
             <p>Version 4 includes: Dark blue glassmorphism, SEO articles to rank on Google, professional privacy policy, visitor counter, admin panel, paywall with QR.</p>
             <p>US English Only • Clean Code • No Bloat</p>
           </div>
@@ -914,10 +905,7 @@ export default function App() {
                   <div className="rounded-2xl bg-white/5 border border-white/10 p-5 space-y-4">
                     <h3 className="font-semibold flex items-center gap-2"><Settings className="w-4 h-4" /> Settings</h3>
                     <div>
-                      <label className="text-xs text-white/50">Wallet Address (TRC20 USDT)</label>
-                      <div className="flex gap-2 mt-1"><input value={newWalletInput} onChange={e=>setNewWalletInput(e.target.value)} placeholder={walletAddr} className="flex-1 h-10 px-3 rounded-xl bg-black/30 border border-white/10 text-xs" />
-                      <button onClick={()=>{if(newWalletInput.trim()){setWalletAddr(newWalletInput.trim()); localStorage.setItem("wallet_address", newWalletInput.trim()); setNewWalletInput("");}}} className="px-4 h-10 rounded-xl bg-white text-black text-xs font-medium">Save</button></div>
-                      <div className="text-[11px] text-white/30 mt-1">Current: {walletAddr}</div>
+                      <label className="text-xs text-white/50">FREE Address (FREE FREE)</label>
                     </div>
                     <div>
                       <label className="text-xs text-white/50">Change Admin Password</label>
@@ -967,54 +955,7 @@ Disallow: /admin`}</pre>
 
       </main>
 
-      {/* Paywall Modal */}
-      {showPaywall && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-          <div className="w-full max-w-md rounded-[24px] bg-[#0f1a3a] border border-white/15 shadow-2xl overflow-hidden">
-            <div className="p-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold flex items-center gap-2"><Lock className="w-5 h-5 text-amber-300" /> Free Unlimited Access</h2>
-                <button onClick={()=>setShowPaywall(false)} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center"><X className="w-4 h-4" /></button>
-              </div>
-              <p className="text-sm text-white/60 mt-2">Unlimited free conversions - No limits, no payment needed!</p>
-
-              <div className="mt-5 rounded-2xl bg-black/40 border border-white/10 p-4">
-                <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-white/40 mb-3"><CheckCircle className="w-4 h-4" /> Free Access</div>
-                <div className="flex gap-4">
-                  <div className="w-24 h-24 rounded-xl bg-white p-2 grid grid-cols-6 gap-0.5">
-                    {Array.from({length:36}).map((_,i)=>(
-                      <div key={i} className={`rounded-[1px] ${Math.random()>0.4 ? "bg-black" : "bg-white"}`} />
-                    ))}
-                  </div>
-                  <div className="flex-1">
-                    <div className="text-[11px] text-white/40">Status</div>
-                    <div className="mt-1 p-2 rounded-xl bg-white/5 border border-white/10 font-mono text-xs break-all">{walletAddr}</div>
-                    <button onClick={()=>navigator.clipboard.writeText(walletAddr)} className="mt-2 w-full h-8 rounded-full bg-white text-black text-xs font-medium flex items-center justify-center gap-1"><Copy className="w-3 h-3" /> Copy Address</button>
-                  </div>
-                </div>
-                <div className="mt-3 text-xs text-amber-200/80 bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5">
-                  <strong>Instructions:</strong> This tool is completely FREE. No payment required. Enjoy unlimited conversions!
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <label className="text-xs text-white/50">Email (optional)</label>
-                <input value={txid} onChange={e=>setTxid(e.target.value)} placeholder="your@email.com (optional)" className="mt-1 w-full h-12 px-4 rounded-xl bg-black/30 border border-white/10 text-sm" />
-              </div>
-
-              <div className="mt-4 flex gap-2">
-                <button disabled={txSubmitting} onClick={handleVerifyTx} className="flex-1 h-12 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold text-sm disabled:opacity-60">
-                  {txSubmitting ? "Verifying..." : "Continue Free"}
-                </button>
-                <button onClick={()=>{setIsPremium(true); localStorage.setItem("premium_unlocked","true"); setShowPaywall(false);}} className="px-4 h-12 rounded-xl bg-white/10 text-sm">Use Free Forever</button>
-              </div>
-
-              <div className="mt-3 text-[11px] text-white/30 text-center">100% Free • No wallet • Contact support@doizapa.pro • Google Safe</div>
-            </div>
-          </div>
-        </div>
-      )}
-
+      
       {/* Contact Modal */}
       {showContact && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
