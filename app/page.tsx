@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Copy, Check, Users, Mail, Lock, ExternalLink, Menu, X } from "lucide-react";
+import { Copy, Check, Users, Mail, ExternalLink, Menu, X } from "lucide-react";
 
 type CrossrefAuthor = { given?: string; family?: string };
 type CrossrefMessage = {
@@ -46,9 +46,6 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [style, setStyle] = useState("apa7");
   const [copied, setCopied] = useState(false);
-  const [view, setView] = useState<"main" | "privacy" | "terms" | "admin">("main");
-  const [isAuth, setIsAuth] = useState(false);
-  const [pass, setPass] = useState("");
   const [showContact, setShowContact] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const visitorCount = 12695;
@@ -67,33 +64,11 @@ export default function Page() {
     setLoading(false);
   }
 
-  if (view === "admin") {
-    if (!isAuth) {
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-[#0a0e2a] text-white">
-          <div className="bg-white/5 p-8 rounded-2xl w-[360px] border border-white/10">
-            <h1 className="font-bold text-lg mb-4">Admin Login</h1>
-            <input type="password" value={pass} onChange={e => setPass(e.target.value)} placeholder="Password" className="w-full p-3 rounded-xl bg-black/30 border border-white/10 text-white" />
-            <button onClick={() => { if (pass === "Admin@2026") setIsAuth(true); else alert("wrong"); }} className="w-full mt-3 p-3 bg-white text-black rounded-xl font-bold">Login</button>
-            <button onClick={() => setView("main")} className="mt-3 text-xs opacity-60">← Back</button>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="min-h-screen bg-[#0a0e2a] text-white p-8">
-        <h1 className="text-2xl font-bold">Admin - 100% Free Version - No Crypto</h1>
-        <p className="opacity-60 mt-2">Site is Google Safe. No crypto, 100% safe.</p>
-        <button onClick={() => setView("main")} className="mt-6 px-4 py-2 bg-white text-black rounded-xl">Back to site</button>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-[#0a0e2a] text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0e2a] via-[#121e4a] to-[#1a2a6a]" />
       <div className="relative z-10">
-        {/* Header */}
+        {/* Header - SAME AS ORIGINAL */}
         <header className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center font-bold">D</div>
@@ -104,9 +79,9 @@ export default function Page() {
           </div>
           <nav className="hidden md:flex items-center gap-1 bg-black/20 backdrop-blur-xl border border-white/10 rounded-full p-1">
             <button className="px-4 py-1.5 rounded-full bg-white text-black text-sm font-medium">Converter</button>
-            <button onClick={() => setView("privacy")} className="px-4 py-1.5 rounded-full text-white/60 text-sm">Guides</button>
-            <button onClick={() => setView("privacy")} className="px-4 py-1.5 rounded-full text-white/60 text-sm">Privacy</button>
-            <button onClick={() => setView("terms")} className="px-4 py-1.5 rounded-full text-white/60 text-sm">About</button>
+            <button className="px-4 py-1.5 rounded-full text-white/60 text-sm">Guides</button>
+            <button className="px-4 py-1.5 rounded-full text-white/60 text-sm">Privacy</button>
+            <button className="px-4 py-1.5 rounded-full text-white/60 text-sm">About</button>
           </nav>
           <div className="flex items-center gap-2">
             <span className="hidden md:flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10"><span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />{visitorCount.toLocaleString()} visitors</span>
@@ -115,9 +90,9 @@ export default function Page() {
           </div>
         </header>
 
-        {/* Main */}
+        {/* Main - SAME UI AS YOUR SCREENSHOT */}
         <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 grid md:grid-cols-[1.2fr_0.8fr] gap-6">
-          {/* Left */}
+          {/* Left - DOI Converter */}
           <div>
             <div className="inline-flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4">✨ Trusted by 12k+ students • Crossref Powered</div>
             <h1 className="text-4xl md:text-5xl font-black leading-[0.9]">DOI to <span className="text-cyan-300">APA</span><br />Converter</h1>
@@ -134,7 +109,7 @@ export default function Page() {
                 <button onClick={convert} disabled={loading} className="h-12 px-6 rounded-xl bg-white text-black font-semibold text-sm flex items-center gap-2">{loading ? "..." : "⚡ Convert"}</button>
               </div>
               <div className="mt-4 flex items-center justify-between">
-                <span className="text-[11px] opacity-50 uppercase">Choose 15 styles</span>
+                <span className="text-[11px] opacity-50 uppercase">CHOOSE 15 STYLES</span>
                 <span className="text-[10px] opacity-40">US English Only</span>
               </div>
               <div className="mt-2 grid grid-cols-3 md:grid-cols-5 gap-2">
@@ -157,7 +132,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right Sidebar - Original Look but 100% Free */}
+          {/* Right Sidebar - SAME AS YOUR SCREENSHOT - 100% Free */}
           <div className="space-y-4">
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[20px] p-4">
               <div className="flex items-center gap-2">
@@ -208,10 +183,9 @@ export default function Page() {
         <footer className="mt-12 border-t border-white/10 bg-black/20 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/40">
             <div className="flex items-center gap-3">
-              <span>© 2026 DOIZAPA PRO Clean v4 • 100% Free • No Crypto • Google Safe</span>
-              <button onClick={() => setView("privacy")} className="hover:text-white">Privacy</button>
-              <button onClick={() => setView("terms")} className="hover:text-white">Terms</button>
-              <button onClick={() => setView("admin")} className="hover:text-white flex items-center gap-1"><Lock className="w-3 h-3" /> Admin</button>
+              <span>© 2026 DOIZAPA PRO Clean v4 • 100% Free • Google Safe</span>
+              <span>Privacy</span>
+              <span>Terms</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10">US English Only</span>
