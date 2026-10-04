@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://doi2apa-15pages-fixed.vercel.app'
+
   const pages = [
     '',
     '/about',
@@ -10,17 +11,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/apa-7th',
     '/apsa',
     '/bibtex',
-    '/chicago-author-date',
     '/chicago',
+    '/chicago-author-date',
     '/contact',
     '/cse',
+    '/doi-citation-generator',
     '/harvard',
+    '/how-to-cite-doi',
     '/ieee',
     '/mla-9th',
+    '/nature',
     '/oscola',
+    '/privacy',
+    '/turabian',
     '/vancouver',
-    '/admin',
-    '/api/verify-tron',
   ]
 
   return pages.map((page) => ({
