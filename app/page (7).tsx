@@ -1,19 +1,19 @@
 export const metadata = {
-  title: "BibTeX Citation Generator - Free DOI to Citation",
-  description: "Free BibTeX citation generator. Convert any DOI to BibTeX format instantly. Accurate, fast, no signup.",
+  title: "ACS Citation Generator - Free DOI to Citation",
+  description: "Free ACS citation generator. Convert any DOI to ACS format instantly. Accurate, fast, no signup.",
 }
 
 export default function Page() {
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto p-6 md:p-8">
-        <h1 className="text-4xl font-bold mb-4">BibTeX Citation Generator</h1>
+        <h1 className="text-4xl font-bold mb-4">ACS Citation Generator</h1>
         <p className="text-lg text-gray-600 mb-8">
-          Convert any DOI to BibTeX citation format instantly. Free, accurate, and fast.
+          Convert any DOI to ACS citation format instantly. Free, accurate, and fast.
         </p>
 
         <div className="bg-white p-6 rounded-lg shadow border">
-          <h2 className="text-2xl font-semibold mb-4">DOI to BibTeX Converter</h2>
+          <h2 className="text-2xl font-semibold mb-4">DOI to ACS Converter</h2>
           <p className="mb-4 text-gray-700">Paste your DOI below:</p>
           <input
             type="text"
@@ -21,19 +21,19 @@ export default function Page() {
             className="w-full p-3 border rounded-lg mb-4"
           />
           <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-medium">
-            Generate BibTeX Citation
+            Generate ACS Citation
           </button>
         </div>
 
         <div className="mt-8 bg-white p-6 rounded-lg shadow border">
-          <h2 className="text-2xl font-semibold mb-4">How to cite DOI in BibTeX?</h2>
+          <h2 className="text-2xl font-semibold mb-4">How to cite DOI in ACS?</h2>
           <p className="text-gray-700">
-            Our tool pulls metadata from Crossref and formats it according to the official BibTeX guide. 
+            Our tool pulls metadata from Crossref and formats it according to the official ACS guide. 
             Just paste your DOI like 10.xxxx/xxxx and get accurate citation in 1 second.
           </p>
           <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-700">
             <li>100% free, no signup</li>
-            <li>Follows official BibTeX guidelines</li>
+            <li>Follows official ACS guidelines</li>
             <li>Includes DOI link automatically</li>
             <li>Works for journal articles, books, and more</li>
           </ul>
@@ -43,7 +43,7 @@ export default function Page() {
           <h3 className="text-xl font-semibold mb-3">Frequently Asked Questions</h3>
           <div className="space-y-3">
             <details className="border rounded p-3">
-              <summary className="font-medium cursor-pointer">Is DOI to BibTeX free?</summary>
+              <summary className="font-medium cursor-pointer">Is DOI to ACS free?</summary>
               <p className="mt-2 text-gray-600">Yes, completely free with no limits.</p>
             </details>
             <details className="border rounded p-3">
