@@ -14,3 +14,4 @@ DOI2APA - نسخة Next.js (تحل مشكلة Vercel)
 
 لوحة الادمن:
 - /admin  user: admin pass: Admin@2026
+.
