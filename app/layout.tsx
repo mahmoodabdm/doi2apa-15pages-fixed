@@ -1,4 +1,6 @@
 import "./globals.css";
+import { Analytics } from '@vercel/analytics/next';
+
 export const metadata = {
   title: "DOI2APA - Free DOI to Citation",
   description: "Convert DOI to APA, MLA, Chicago, BibTeX instantly",
@@ -8,6 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="flex flex-col min-h-screen">
         <div className="flex-grow">{children}</div>
+        <Analytics />
         
         <footer className="bg-gray-900 text-white py-8 mt-12">
           <div className="max-w-5xl mx-auto px-6">
